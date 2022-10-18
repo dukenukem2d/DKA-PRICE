@@ -1,4 +1,4 @@
-call "C:\Users\Alex\miniconda3\Scripts\activate.bat" DS & cd "C:\Users\Alex\Desktop\Python\DKA Price" & python dka_price.py 140
+call "C:\Users\Alex\miniconda3\Scripts\activate.bat" DS & cd "C:\Users\Alex\Desktop\Python\DKA Price" & python dka_price.py 140 nazirullo.negmatov@dkafze.com
 
 @REM call "<condapath>\Scripts\activate.bat" <env_name> & cd "<folder_for_your_py_script>" & python <scriptname.py> [<arguments>]
 
