@@ -17,6 +17,7 @@ now = date.today()
 FILE = 'price_list.xlsx'
 username = os.getenv('USERNAME_REPORT_SERVER')
 password = os.getenv('PASSWORD_REPORT_SERVER')
+sender = os.getenv('SENDER')
 token = os.getenv('TOKEN_GMAIL')
 
 def main():
@@ -28,7 +29,7 @@ def main():
 exctraction(customer_id,now,username,password)
 print('Exctraction DONE')
 formating(FILE,customer_id,now)
-send_email(now, reciver, token)
+send_email(now, sender, reciver, token)
 
 
 if __name__ == "__main__":

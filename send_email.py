@@ -12,12 +12,10 @@ from email.mime.application import MIMEApplication
 # reciver = 'nazirullo.negmatov@dkafze.com'
 
 
-def send_email(now, reciver, token):
+def send_email(now, sender, reciver, token):
     """
     Функция отправки прайс листа
     """
-    sender = 'alexander.aleynikov@dkafze.com'
-
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
 
