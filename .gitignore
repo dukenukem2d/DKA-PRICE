@@ -1,6 +1,6 @@
 .env
 price_list.xlsx
-Price_list-2022-10-18.xlsx
+Price_list-*.xlsx
 test.py
 __pycache__/formating.cpython-37.pyc
 __pycache__/formating.cpython-39.pyc
