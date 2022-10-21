@@ -1,5 +1,7 @@
+"""
+Модуль отправки прайс листа по gmail
+"""
 import smtplib
-import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
@@ -9,9 +11,12 @@ from email.mime.application import MIMEApplication
 
 # reciver = 'nazirullo.negmatov@dkafze.com'
 
+
 def send_email(now, reciver, token):
+    """
+    Функция отправки прайс листа
+    """
     sender = 'alexander.aleynikov@dkafze.com'
-    token = token
 
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
@@ -25,15 +30,15 @@ def send_email(now, reciver, token):
         msg["Subject"] = f"Price List {now}"
         msg.attach(MIMEText(f"Price List {now}"))
 
+        with open(f"Price_list-{now}.xlsx", "rb") as f_table:
+            file = MIMEApplication(f_table.read())
 
-        with open(f"Price_list-{now}.xlsx", "rb") as f:
-            file = MIMEApplication(f.read())
-        
-        file.add_header('content-disposition', 'attachment', filename = f"Price_list-{now}.xlsx")
-        msg.attach(file)    
-        
+        file.add_header('content-disposition', 'attachment',
+                        filename=f"Price_list-{now}.xlsx")
+        msg.attach(file)
+
         server.sendmail(sender, reciver, msg.as_string())
 
         return "Message was sent"
-    except Exception as _ex:
+    except smtplib.SMTPAuthenticationError as _ex:
         return f"{_ex}\nCheck you login or password"
