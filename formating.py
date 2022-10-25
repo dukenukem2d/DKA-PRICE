@@ -1,28 +1,22 @@
 """
 Модуль форматирования прайс листа
 """
-import os
-import xlrd
+# import xlrd
 import pandas as pd
-# from datetime import date
-
-# customer_id = 140
-# now = date.today()
-# file = 'price_list.xlsx'
 
 
 def formating(file_, customer_id, now):
     """
     Функция форматирования
-    """
-    wb_ = xlrd.open_workbook(file_, logfile=open(
-        os.devnull, 'w', encoding="utf-8"))  # remove WARNINGS
+    # """
+    # wb_ = xlrd.open_workbook(file_, logfile=open(
+    #     os.devnull, 'w', encoding="utf-8"))  # remove WARNINGS
     df_ = pd.read_excel(
-        wb_, skiprows=10, usecols="A:C,E,F,I,J,M:S,U", engine='xlrd')
+        file_, skiprows=10, usecols="A:C,E,F,I,J,M:S,U", engine='xlrd')
     df_ = df_.assign(Order='', Order_Sum='')
     df_['Quantity'] = df_['Quantity'].fillna(0)
 
-    writer = pd.ExcelWriter(f'Price_list-{now}.xlsx', engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
+    writer = pd.ExcelWriter(f'Price_list-{customer_id}-{now}.xlsx', engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
     df_.to_excel(writer, sheet_name='Price_list', index=False, startrow=5)
 
     workbook = writer.book # pylint: disable=no-member
@@ -148,11 +142,3 @@ def formating(file_, customer_id, now):
     worksheet.set_zoom(67)
 
     writer.save()
-
-
-# def main():
-#     formating(FILE, customer_id, now)
-
-
-# if __name__ == "__main__":
-#     main()

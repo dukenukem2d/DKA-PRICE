@@ -12,7 +12,7 @@ from email.mime.application import MIMEApplication
 # reciver = 'nazirullo.negmatov@dkafze.com'
 
 
-def send_email(now, sender, reciver, token):
+def send_email(sender, reciver, token, alias_sender, file_):
     """
     Функция отправки прайс листа
     """
@@ -23,16 +23,16 @@ def send_email(now, sender, reciver, token):
         server.login(sender, token)
         # msg = MIMEText(message)
         msg = MIMEMultipart()
-        msg['From'] = sender
+        msg['From'] = alias_sender
         msg['To'] = reciver
-        msg["Subject"] = f"Price List {now}"
-        msg.attach(MIMEText(f"Price List {now}"))
+        msg["Subject"] = file_
+        msg.attach(MIMEText('Price list'))
 
-        with open(f"Price_list-{now}.xlsx", "rb") as f_table:
+        with open(file_, "rb") as f_table:
             file = MIMEApplication(f_table.read())
 
         file.add_header('content-disposition', 'attachment',
-                        filename=f"Price_list-{now}.xlsx")
+                        filename=file_)
         msg.attach(file)
 
         server.sendmail(sender, reciver, msg.as_string())
