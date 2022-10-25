@@ -1,7 +1,6 @@
 """
 Модуль форматирования прайс листа
 """
-# import xlrd
 import pandas as pd
 
 
@@ -9,10 +8,7 @@ def formating(file_, customer_id, now):
     """
     Функция форматирования
     # """
-    # wb_ = xlrd.open_workbook(file_, logfile=open(
-    #     os.devnull, 'w', encoding="utf-8"))  # remove WARNINGS
-    df_ = pd.read_excel(
-        file_, skiprows=10, usecols="A:C,E,F,I,J,M:S,U", engine='xlrd')
+    df_ = pd.read_excel(file_, skiprows=10, usecols="A:C,E,F,I,J,M:S,U", engine='xlrd')
     df_ = df_.assign(Order='', Order_Sum='')
     df_['Quantity'] = df_['Quantity'].fillna(0)
 
