@@ -5,7 +5,7 @@ import requests
 from requests_ntlm import HttpNtlmAuth
 
 
-def exctraction(query, username, password):
+def exctraction(query: str, username: str, password: str) -> bytes:
     """
     Функция загрузки прайс листа
     """

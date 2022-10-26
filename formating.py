@@ -3,8 +3,7 @@
 """
 import pandas as pd
 
-
-def formating(file_, customer_id, now):
+def formating(file_: bytes, customer_id: str, now: str) -> None:
     """
     Функция форматирования
     # """
