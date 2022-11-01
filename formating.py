@@ -4,7 +4,7 @@
 from typing import Union
 import pandas as pd # type: ignore
 
-def formating(file_: bytes, customer_id: Union[str, None], now) -> None:
+def formating(file_: bytes, customer_id: Union[str, None], now: object) -> None:
     """
     Функция форматирования
     # """
@@ -12,10 +12,10 @@ def formating(file_: bytes, customer_id: Union[str, None], now) -> None:
     df_ = df_.assign(Order='', Order_Sum='')
     df_['Quantity'] = df_['Quantity'].fillna(0)
 
-    writer = pd.ExcelWriter(f'Price_list-{customer_id}-{now}.xlsx', engine='xlsxwriter') # pylint: disable=abstract-class-instantiated
+    writer = pd.ExcelWriter(f'Price_list-{customer_id}-{now}.xlsx', engine='xlsxwriter') # type: ignore 
     df_.to_excel(writer, sheet_name='Price_list', index=False, startrow=5)
 
-    workbook = writer.book # pylint: disable=no-member
+    workbook = writer.book # type: ignore 
     worksheet = writer.sheets['Price_list']
 
     header_format = workbook.add_format({

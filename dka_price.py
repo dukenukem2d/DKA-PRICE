@@ -31,7 +31,7 @@ def main():
     """
     file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
     formating(exctraction(query,username,password),customer_id,date_today)
-    send_email(sender, reciver, token, alias_sender, file_excel)
+    send_email(sender, reciver, token, alias_sender, file_excel) #type: ignore
 
 if __name__ == "__main__":
     print("Запуск приложения ", main())
