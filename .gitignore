@@ -8,3 +8,4 @@ __pycache__/price_exctraction.cpython-37.pyc
 __pycache__/send_email.cpython-37.pyc
 .vscode/.pylintrc
 .vscode/settings.json
+run.bat
