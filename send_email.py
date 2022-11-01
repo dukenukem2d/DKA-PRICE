@@ -1,13 +1,15 @@
 """
 Модуль отправки прайс листа по gmail
 """
+from typing import Union
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 
-def send_email(sender: str, reciver: str, token: str, alias_sender: str, file_name: str) -> str:
+def send_email(sender: str,reciver: str,token: str, 
+                alias_sender: Union[str, None], file_name: str) -> str:
     """
     Функция отправки прайс листа
     """
