@@ -1,9 +1,9 @@
 """
 Модуль форматирования прайс листа
 """
-import pandas as pd
+import pandas as pd # type: ignore
 
-def formating(file_: bytes, customer_id: str, now: str) -> None:
+def formating(file_: bytes, customer_id: str, now) -> None:
     """
     Функция форматирования
     # """

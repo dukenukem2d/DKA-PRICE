@@ -5,14 +5,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-# from datetime import date
-
-# now = date.today()
-
-# reciver = 'nazirullo.negmatov@dkafze.com'
 
 
-def send_email(sender: str, reciver: str, token: str, alias_sender: str, file_name: str) -> None:
+def send_email(sender: str, reciver: str, token: str, alias_sender: str, file_name: str) -> str:
     """
     Функция отправки прайс листа
     """
@@ -21,7 +16,6 @@ def send_email(sender: str, reciver: str, token: str, alias_sender: str, file_na
 
     try:
         server.login(sender, token)
-        # msg = MIMEText(message)
         msg = MIMEMultipart()
         msg['From'] = alias_sender
         msg['To'] = reciver

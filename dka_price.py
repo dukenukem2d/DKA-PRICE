@@ -11,8 +11,11 @@ from send_email import send_email
 
 load_dotenv(find_dotenv())
 
-customer_id = sys.argv[1]
-reciver = sys.argv[2]
+customer_id = os.getenv('DEFAULT_CUSTOMER_ID')
+reciver = os.getenv('DEFAULT_RECIVER')
+if sys.argv[1:]:
+    customer_id = sys.argv[1]
+    reciver = sys.argv[2]
 date_today = date.today()
 username = os.getenv('USERNAME_REPORT_SERVER')
 password = os.getenv('PASSWORD_REPORT_SERVER')
@@ -26,9 +29,8 @@ def main():
     """
     Главная функция
     """
-    # exctraction(customer_id,date_today,username,password)
-    formating(exctraction(query,username,password),customer_id,date_today)
     file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
+    formating(exctraction(query,username,password),customer_id,date_today)
     send_email(sender, reciver, token, alias_sender, file_excel)
 
 if __name__ == "__main__":
