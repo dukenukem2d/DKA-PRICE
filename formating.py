@@ -87,28 +87,30 @@ def formating(file_: bytes, customer_id: Union[str, None], now: object) -> None:
 
     # add formulas for reserved goods
     row_numbers = df_.shape[0] + 6
-    worksheet.write_dynamic_array_formula(
-        'O2', f'=SUM($I$7:$I${row_numbers}*$O$7:$O${row_numbers})', cell_format)  # Total weight
-    worksheet.write_dynamic_array_formula(
-        'O3', f'=SUM($J$7:$J${row_numbers}*$O$7:$O${row_numbers})', cbm_format)  # Total CBM
-    worksheet.write_dynamic_array_formula(
-        'O4', f'=SUM($K$7:$K${row_numbers}*$O$7:$O${row_numbers})', cell_format_)  # Total Cartoons
-    worksheet.write_dynamic_array_formula(
-        'O5', f'=SUM($N$7:$N${row_numbers}*$O$7:$O${row_numbers})', money_format)  # Total SUM
+    worksheet.write_formula(
+        'O2', f'=SUMPRODUCT($I$7:$I${row_numbers}*$O$7:$O${row_numbers})', cell_format)  # Total weight
+    worksheet.write_formula(
+        'O3', f'=SUMPRODUCT($J$7:$J${row_numbers}*$O$7:$O${row_numbers})', cbm_format)  # Total CBM
+    worksheet.write_formula(
+        'O4', f'=SUMPRODUCT($K$7:$K${row_numbers}*$O$7:$O${row_numbers})', cell_format_)  # Total Cartoons
+    worksheet.write_formula(
+        'O5', f'=SUMPRODUCT($N$7:$N${row_numbers}*$O$7:$O${row_numbers})', money_format)  # Total SUM
 
     # add formulas for ordered goods
-    worksheet.write_dynamic_array_formula(
-        'P2', f'=SUM($I$7:$I${row_numbers}*$P$7:$P${row_numbers})', cell_format)  # Total weight
-    worksheet.write_dynamic_array_formula(
-        'P3', f'=SUM($J$7:$J${row_numbers}*$P$7:$P${row_numbers})', cbm_format)  # Total CBM
-    worksheet.write_dynamic_array_formula(
-        'P4', f'=SUM($K$7:$K${row_numbers}*$P$7:$P${row_numbers})', cell_format_)  # Total Cartoons
-    worksheet.write_dynamic_array_formula(
-        'P5', f'=SUM($N$7:$N${row_numbers}*$P$7:$P${row_numbers})', money_format)  # Total SUM
+    worksheet.write_formula(
+        'P2', f'=SUMPRODUCT($I$7:$I${row_numbers}*$P$7:$P${row_numbers})', cell_format)  # Total weight
+    worksheet.write_formula(
+        'P3', f'=SUMPRODUCT($J$7:$J${row_numbers}*$P$7:$P${row_numbers})', cbm_format)  # Total CBM
+    worksheet.write_formula(
+        'P4', f'=SUMPRODUCT($K$7:$K${row_numbers}*$P$7:$P${row_numbers})', cell_format_)  # Total Cartoons
+    worksheet.write_formula(
+        'P5', f'=SUMPRODUCT($N$7:$N${row_numbers}*$P$7:$P${row_numbers})', money_format)  # Total SUM
 
     # Formula Amount of ordered goods
-    worksheet.write_dynamic_array_formula(
-        f'Q7:Q{row_numbers}',    f'=(N7:N{row_numbers}*P7:P{row_numbers})', money_format_)
+    # worksheet.write_dynamic_array_formula(
+    #     f'Q7:Q{row_numbers}',    f'=(N7:N{row_numbers}*P7:P{row_numbers})', money_format_)
+    for i in range(7,row_numbers+1):
+        worksheet.write_formula(f'Q{i}', f'=N{i}*P{i}', money_format_)
 
     # add formulas for ordered + reserved goods
     worksheet.write_formula('Q2', 'O2+P2', cell_format)  # Total weight
