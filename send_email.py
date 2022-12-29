@@ -1,18 +1,15 @@
 """
 Модуль отправки прайс листа по gmail
 """
+from typing import Union
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
-# from datetime import date
-
-# now = date.today()
-
-# reciver = 'nazirullo.negmatov@dkafze.com'
 
 
-def send_email(now, sender, reciver, token):
+def send_email(sender: str,reciver: str,token: str, 
+                alias_sender: Union[str, None], file_name: str) -> str:
     """
     Функция отправки прайс листа
     """
@@ -21,18 +18,17 @@ def send_email(now, sender, reciver, token):
 
     try:
         server.login(sender, token)
-        # msg = MIMEText(message)
         msg = MIMEMultipart()
-        msg['From'] = sender
+        msg['From'] = alias_sender
         msg['To'] = reciver
-        msg["Subject"] = f"Price List {now}"
-        msg.attach(MIMEText(f"Price List {now}"))
+        msg["Subject"] = file_name
+        msg.attach(MIMEText('Price list'))
 
-        with open(f"Price_list-{now}.xlsx", "rb") as f_table:
+        with open(file_name, "rb") as f_table:
             file = MIMEApplication(f_table.read())
 
         file.add_header('content-disposition', 'attachment',
-                        filename=f"Price_list-{now}.xlsx")
+                        filename=file_name)
         msg.attach(file)
 
         server.sendmail(sender, reciver, msg.as_string())
