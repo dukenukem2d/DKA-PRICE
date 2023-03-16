@@ -1,13 +1,16 @@
 """
 Выгрузка и отправка прайс листа на почту
 """
-import sys
 import os
+import sys
 from datetime import date
-from dotenv import load_dotenv, find_dotenv
+
+from dotenv import find_dotenv, load_dotenv
+
 from formating import formating
 from price_exctraction import exctraction
 from send_email import send_email
+from file_manipulation import remove_old_files
 
 load_dotenv(find_dotenv())
 
@@ -23,15 +26,19 @@ sender = os.getenv('SENDER')
 alias_sender = os.getenv('SENDER_ALIAS')
 token = os.getenv('TOKEN_GMAIL')
 
-query = f'''http://192.168.1.104/ReportServer/Pages/ReportViewer.aspx?%2fDynamicsAX%2fCustPriceList.PrecisionDesign&CustPriceList_CustAccount={customer_id}&CustPriceList_PerDate={date_today}&CustPriceList_CurrencyCode=usd&CustPriceList_DataArea=dka&rs:Command=Render&rs:Format=Excel''' # pylint: disable=line-too-long
+query = f'''http://192.168.1.104/ReportServer/Pages/ReportViewer.aspx?%2fDynamicsAX%2fCustPriceList.PrecisionDesign&CustPriceList_CustAccount={customer_id}&CustPriceList_PerDate={date_today}&CustPriceList_CurrencyCode=usd&CustPriceList_DataArea=dka&rs:Command=Render&rs:Format=Excel'''  # pylint: disable=line-too-long
+
 
 def main():
     """
     Главная функция
     """
     file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
-    formating(exctraction(query,username,password),customer_id,date_today)
-    send_email(sender, reciver, token, alias_sender, file_excel) #type: ignore
+    formating(exctraction(query, username, password), customer_id, date_today)
+    send_email(sender, reciver, token, alias_sender,
+               file_excel)  # type: ignore
+    remove_old_files(date_today)
+
 
 if __name__ == "__main__":
     print("Запуск приложения ", main())

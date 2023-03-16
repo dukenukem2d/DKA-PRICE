@@ -2,20 +2,23 @@
 Модуль форматирования прайс листа
 """
 from typing import Union
-import pandas as pd # type: ignore
+import pandas as pd  # type: ignore
+
 
 def formating(file_: bytes, customer_id: Union[str, None], now: object) -> None:
     """
     Функция форматирования
     # """
-    df_ = pd.read_excel(file_, skiprows=10, usecols="A:C,E,F,I,J,M:S,U", engine='xlrd')
+    df_ = pd.read_excel(file_, skiprows=10,
+                        usecols="A:C,E,F,I,J,M:S,U", engine='xlrd')
     df_ = df_.assign(Order='', Order_Sum='')
     df_['Quantity'] = df_['Quantity'].fillna(0)
 
-    writer = pd.ExcelWriter(f'Price_list-{customer_id}-{now}.xlsx', engine='xlsxwriter') # type: ignore 
+    writer = pd.ExcelWriter(
+        f'Price_list-{customer_id}-{now}.xlsx', engine='xlsxwriter')  # type: ignore
     df_.to_excel(writer, sheet_name='Price_list', index=False, startrow=5)
 
-    workbook = writer.book # type: ignore 
+    workbook = writer.book  # type: ignore
     worksheet = writer.sheets['Price_list']
 
     header_format = workbook.add_format({
@@ -59,7 +62,8 @@ def formating(file_: bytes, customer_id: Union[str, None], now: object) -> None:
     for col_num, value in enumerate(df_.columns.values):
         worksheet.write(5, col_num, value, header_format)
 
-    columns = (10, 13, 13, 13, 16, 16, 30, 13, 13, 14, 12, 13, 12, 14, 14, 12, 19)
+    columns = (10, 13, 13, 13, 16, 16, 30, 13,
+               13, 14, 12, 13, 12, 14, 14, 12, 19)
     for i, c_width in enumerate(columns):
         worksheet.set_column(i, i, c_width)
 
@@ -109,7 +113,7 @@ def formating(file_: bytes, customer_id: Union[str, None], now: object) -> None:
     # Formula Amount of ordered goods
     # worksheet.write_dynamic_array_formula(
     #     f'Q7:Q{row_numbers}',    f'=(N7:N{row_numbers}*P7:P{row_numbers})', money_format_)
-    for i in range(7,row_numbers+1):
+    for i in range(7, row_numbers+1):
         worksheet.write_formula(f'Q{i}', f'=N{i}*P{i}', money_format_)
 
     # add formulas for ordered + reserved goods
