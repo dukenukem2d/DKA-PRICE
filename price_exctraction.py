@@ -1,12 +1,13 @@
 """
 Модуль загрузки прайс листа с сервера отчетов
 """
-from typing import Union
+#from typing import Union
 import requests
 from requests_ntlm import HttpNtlmAuth # type: ignore
 
 
-def exctraction(query: str, username: Union[str, None], password: Union[str, None]) -> bytes:
+#def exctraction(query: str, username: Union[str, None], password: Union[str, None]) -> bytes:
+def exctraction(query: str, username: str, password: str) -> bytes:
     """
     Функция загрузки прайс листа
     """
