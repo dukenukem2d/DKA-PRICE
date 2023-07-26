@@ -143,4 +143,4 @@ def formating(file_: bytes, customer_id: Union[str, None], now: object) -> None:
 
     worksheet.set_zoom(67)
 
-    writer.save()
+    writer.close()

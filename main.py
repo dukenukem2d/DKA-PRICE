@@ -30,15 +30,11 @@ if args.customer_id is None:
     customer_id = os.getenv('DEFAULT_CUSTOMER_ID')
 else:
     customer_id = args.customer_id
-if args.email is None:
-    reciver = os.getenv('DEFAULT_RECIVER')
-else:
-    reciver = args.email
 
 # Define the URL of the file to download
 query = f'''http://192.168.1.104/ReportServer/Pages/ReportViewer.aspx?%2fDynamicsAX%2fCustPriceList.PrecisionDesign&CustPriceList_CustAccount={customer_id}&CustPriceList_PerDate={date_today}&CustPriceList_CurrencyCode=usd&CustPriceList_DataArea=dka&rs:Command=Render&rs:Format=Excel'''  # pylint: disable=line-too-long
 
-print(query)
+#print(query)
 file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
 path = Path(file_excel)
 if path.is_file():
@@ -47,49 +43,11 @@ else:
     formating(exctraction(query, username, password), customer_id, date_today)
     print('File downloaded successfully.')
 
-#if (args.customer_id and args.email) is None :
-#    # No arguments were provided, just download the file
-#    file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
-#    path = Path(file_excel)
-#    if path.is_file():
-#        print("File exist")
-#    else:
-#        formating(exctraction(query, username, password), customer_id, date_today)
-#        print('File downloaded successfully.')
-#elif args.email is None:
-#    reciver = args.email
-#    file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
-#    path = Path(file_excel)
-#    if path.is_file():
-#        send_email(sender, reciver, token, alias_sender, file_excel)  # type: ignore
-#        print("File exists and sent to default email id")
-#    else:
-#        formating(exctraction(query, username, password), customer_id, date_today)
-#        send_email(sender, reciver, token, alias_sender, file_excel)  # type: ignore
-#        print('File sent to default email address.')
-#elif args.customer_id is None:
-#    customer_id = args.customer_id
-#    file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
-#    path = Path(file_excel)
-#    if path.is_file():
-#        send_email(sender, reciver, token, alias_sender, file_excel)  # type: ignore
-#        print("File exists and sent to default email id")
-#    else:
-#        formating(exctraction(query, username, password), customer_id, date_today)
-#        send_email(sender, reciver, token, alias_sender, file_excel)  # type: ignore
-#        print('File sent to default email address.')
-#else:
-#    # Both the customer ID and email address were provided, send the file to the specified email address
-#    customer_id = args.customer_id
-#    reciver = args.email
-#    file_excel = f'Price_list-{customer_id}-{date_today}.xlsx'
-#    path = Path(file_excel)
-#    if path.is_file():
-#        send_email(sender, reciver, token, alias_sender, file_excel)  # type: ignore
-#        print("File exists and sent to default email id")
-#    else:
-#        formating(exctraction(query, username, password), customer_id, date_today)
-#        send_email(sender, reciver, token, alias_sender, file_excel)  # type: ignore
-#        print('File sent to specified email address.')
+if args.email is None:
+    reciver = os.getenv('DEFAULT_RECIVER')
+else:
+    reciver = args.email
+    send_email(sender, reciver, token, alias_sender, file_excel) 
+    print('File sent to specified email address.')
 
 remove_old_files(date_today)
