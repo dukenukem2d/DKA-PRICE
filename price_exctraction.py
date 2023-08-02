@@ -13,8 +13,7 @@ def exctraction(query: str, username: str, password: str) -> bytes:
     """
     request = requests.get(query, auth=HttpNtlmAuth(username, password))
 
-    # if request.status_code == 200:
-    #     with open('price_list.xlsx', 'wb') as out:
-    #         for bits in request.iter_content():
-    #             out.write(bits)
-    return request.content
+    if request.status_code == 200:
+        return request.content
+    else:
+        print("Use company VPN")
