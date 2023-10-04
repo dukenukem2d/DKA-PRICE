@@ -11,4 +11,4 @@ __pycache__/
 .vscode/settings.json
 run.bat
 *.ipynb
-price/
+venv/
